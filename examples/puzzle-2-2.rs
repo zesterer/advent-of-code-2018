@@ -32,17 +32,12 @@ fn exec_ultra(l: &[u8]) -> usize {
         unsafe {
             hashes[i][0] = rail_halves.get_unchecked(i * 2 + 0).wrapping_sum() as u16;
             hashes[i][2] = rail_halves.get_unchecked(i * 2 + 1).wrapping_sum() as u16;
-            //hashes[i][2] = rail_halves.get_unchecked(i * 4 + 2).wrapping_sum() as u16;
-            //hashes[i][3] = rail_halves.get_unchecked(i * 4 + 3).wrapping_sum() as u16;
         }
     }
-
-    //let hash_rail = unsafe { &*std::mem::transmute::<_, *mut [u16x4; 250]>(&mut hashes as *mut _ as *mut [[u8; 8]; 250]) };
 
     for i in 0..250 {
         for j in i + 1..250 {
             if
-                //(hash_rail[i] - hash_rail[j]).min(u16x4::splat(1)).wrapping_sum() == 1
                 hashes[i][0].wrapping_sub(hashes[j][0]).min(1) +
                 hashes[i][2].wrapping_sub(hashes[j][2]).min(1) == 1
             {
